@@ -8,7 +8,7 @@ import Home from './pages/Home/Home/Home';
 
 function App() {
   return (
-    <div className="App">
+    <div>
       <Header></Header>
       <Footer></Footer>
       <Routes>
