@@ -5,6 +5,7 @@ import { Route, Routes } from 'react-router-dom';
 import About from './pages/About/About';
 import Header from './pages/Shared/Header/Header';
 import Home from './pages/Home/Home/Home';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
   return (
