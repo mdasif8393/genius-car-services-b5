@@ -3,9 +3,32 @@ import "./SocialLogin.css";
 import googleLogo from "../../../images/icon/google-logo.png";
 import facebookLogo from "../../../images/icon/facebook.png";
 import githubLogo from "../../../images/icon/github.png";
+import {
+  useSignInWithGithub,
+  useSignInWithGoogle,
+} from "react-firebase-hooks/auth";
+import auth from "../../../firebase.init";
+import { useNavigate } from "react-router-dom";
 const SocialLogin = () => {
+  const navigate = useNavigate();
+
+  const [signInWithGoogle, user, loading, error] = useSignInWithGoogle(auth);
+  const [signInWithGithub, user1, loading1, error1] = useSignInWithGithub(auth);
+
+  let element = "";
+  if (error || error1) {
+    element = (
+      <p className="text-danger">
+        Error: {error.message} {error1.message}
+      </p>
+    );
+    if (user || user1) {
+      navigate("/home");
+    }
+  }
   return (
     <div>
+      {element}
       <div className="d-flex align-items-center justify-content-center mt-5">
         <div className="w-50 bg-primary" style={{ height: "1px" }}></div>
         <span className="m-2">or</span>
@@ -13,7 +36,10 @@ const SocialLogin = () => {
       </div>
 
       <div className="d-flex justify-content-center align-items-center">
-        <button className="btn btn-primary w-50">
+        <button
+          onClick={() => signInWithGoogle()}
+          className="btn btn-primary w-50"
+        >
           <img
             src={googleLogo}
             className="img-fluid"
@@ -37,7 +63,10 @@ const SocialLogin = () => {
       </div>
 
       <div className="d-flex justify-content-center align-items-center">
-        <button className="btn btn-primary w-50">
+        <button
+          onClick={() => signInWithGithub()}
+          className="btn btn-primary w-50"
+        >
           <img
             src={githubLogo}
             className="img-fluid"

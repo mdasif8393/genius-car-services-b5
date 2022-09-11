@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import auth from "../../../firebase.init";
@@ -7,6 +7,9 @@ import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth";
 import SocialLogin from "../SocialLogin/SocialLogin";
 
 const Registration = () => {
+  const [agree, setAgree] = useState(false);
+  console.log(agree);
+
   const navigate = useNavigate();
 
   const [createUserWithEmailAndPassword, user, loading, error] =
@@ -40,9 +43,6 @@ const Registration = () => {
           <Form.Group className="mb-3" controlId="formBasicEmail">
             <Form.Label>Email address</Form.Label>
             <Form.Control name="email" type="email" placeholder="Enter email" />
-            <Form.Text className="text-muted">
-              We'll never share your email with anyone else.
-            </Form.Text>
           </Form.Group>
 
           <Form.Group className="mb-3" controlId="formBasicPassword">
@@ -53,10 +53,23 @@ const Registration = () => {
               placeholder="Password"
             />
           </Form.Group>
-          <Button variant="primary" type="submit">
+          <Form.Group className="mb-3" controlId="formBasicCheckbox">
+            <Form.Check
+              onClick={() => setAgree(!agree)}
+              type="checkbox"
+              label="Accept terms and conditions"
+              name="terms"
+              className={agree ? "text-primary" : "text-danger"}
+            />
+          </Form.Group>
+          <Button
+            disabled={!agree}
+            variant="primary"
+            type="submit"
+            className="w-50 d-block mx-auto  mt-4"
+          >
             Register
           </Button>
-
           <p>
             Already Registered?
             <Link to="/login" className="text-decoration-none text-danger">

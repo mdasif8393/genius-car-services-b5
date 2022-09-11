@@ -1,6 +1,9 @@
 import React, { useRef } from "react";
 import { Button, Form } from "react-bootstrap";
-import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
+import {
+  useSendPasswordResetEmail,
+  useSignInWithEmailAndPassword,
+} from "react-firebase-hooks/auth";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import auth from "../../../firebase.init";
 import SocialLogin from "../SocialLogin/SocialLogin";
@@ -13,6 +16,19 @@ const Login = () => {
 
   const [signInWithEmailAndPassword, user, loading, error] =
     useSignInWithEmailAndPassword(auth);
+
+  const [sendPasswordResetEmail, sending] = useSendPasswordResetEmail(auth);
+
+  const resetPassword = async () => {
+    const email = emailRef.current.value;
+    await sendPasswordResetEmail(email);
+    alert("Sent email");
+  };
+
+  let element = "";
+  if (error) {
+    element = <p className="text-danger">Error: {error.message}</p>;
+  }
 
   const passwordRef = useRef("");
   const emailRef = useRef("");
@@ -54,15 +70,25 @@ const Login = () => {
               placeholder="Password"
             />
           </Form.Group>
-          <Button variant="primary" type="submit">
+          <Button variant="primary" type="submit" s>
             Login
           </Button>
           <p>
+            Forget Password?
+            <span
+              onClick={resetPassword}
+              className="text-decoration-none text-primary"
+            >
+              Reset Password
+            </span>
+          </p>
+          <p>
             New User?
-            <Link to="/register" className="text-decoration-none text-danger">
+            <Link to="/register" className="text-decoration-none">
               Please Register
             </Link>
           </p>
+          {element}
           <SocialLogin></SocialLogin>
         </Form>
       </div>
