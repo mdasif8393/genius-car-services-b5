@@ -5,27 +5,29 @@ import auth from "../../../firebase.init";
 import "./Registration.css";
 import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth";
 import SocialLogin from "../SocialLogin/SocialLogin";
+import { useUpdateProfile } from "react-firebase-hooks/auth";
 
 const Registration = () => {
   const [agree, setAgree] = useState(false);
-  console.log(agree);
 
   const navigate = useNavigate();
 
   const [createUserWithEmailAndPassword, user, loading, error] =
-    useCreateUserWithEmailAndPassword(auth);
+    useCreateUserWithEmailAndPassword(auth, { sendEmailVerification: true });
 
-  const handleSubmit = (event) => {
+  const [updateProfile, updating] = useUpdateProfile(auth);
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const name = event.target.name.value;
     const email = event.target.email.value;
     const password = event.target.password.value;
-    createUserWithEmailAndPassword(email, password);
-
-    if (user) {
-      navigate("/");
-    }
+    await createUserWithEmailAndPassword(email, password);
+    await updateProfile({ displayName: name });
+    alert("Updated profile");
+    navigate("/");
   };
+
   return (
     <div>
       <h2 className="text-center text-primary">Please Register</h2>
