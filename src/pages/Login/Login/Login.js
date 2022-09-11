@@ -11,6 +11,8 @@ import SocialLogin from "../SocialLogin/SocialLogin";
 import "./Login.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { Helmet } from "react-helmet-async";
+import PageTitle from "../../Shared/PageTitle/PageTitle";
 
 const Login = () => {
   const notify = () => toast("Password reset link send to your email!");
@@ -56,8 +58,8 @@ const Login = () => {
 
   return (
     <div>
+      <PageTitle title="Login"></PageTitle>
       <h1 className="text-center text-primary">Please Login</h1>
-
       <div className="d-flex align-items-center justify-content-center mt-5">
         <Form className="w-50" onSubmit={handleSubmit}>
           <Form.Group className="mb-3" controlId="formBasicEmail">
