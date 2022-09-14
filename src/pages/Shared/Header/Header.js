@@ -31,12 +31,17 @@ const Header = () => {
             <Nav.Link href="home">Home</Nav.Link>
             <Nav.Link href="home#services">Services</Nav.Link>
             <Nav.Link href="home#experts">Experts</Nav.Link>
-            <Nav.Link href="addservice">Add a Service</Nav.Link>
           </Nav>
           <Nav>
             <Nav.Link as={Link} to="/about">
               About
             </Nav.Link>
+            {user && (
+              <>
+                <Nav.Link href="addservice">Add a Service</Nav.Link>
+                <Nav.Link href="manage">Manage Services</Nav.Link>
+              </>
+            )}
             {user ? (
               <button
                 className="btn btn-link text-danger text-decoration-none"
