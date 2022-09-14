@@ -22,7 +22,7 @@ const RequireAuth = ({ children }) => {
     return <Navigate to="/login" state={{ from: location }} replace></Navigate>;
   }
 
-  if (!user.emailVerified) {
+  if (user.providerData[0].providerId === "password" && !user.emailVerified) {
     return (
       <div className="d-flex justify-content-center align-items-center mt-5">
         <div>
