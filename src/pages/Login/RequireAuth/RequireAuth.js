@@ -38,7 +38,6 @@ const RequireAuth = ({ children }) => {
             Sent Verification
           </button>
         </div>
-        <ToastContainer />
       </div>
     );
   }
